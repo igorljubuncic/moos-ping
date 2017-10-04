@@ -1,0 +1,32 @@
+name: moos-ping
+version: 0.1
+summary: MOOS Ping Example
+description: |
+  The MOOS ping example requires the MOOSDB as well as the ping/pong
+  application.
+ 
+grade: devel
+confinement: devmode
+ 
+parts:
+  moos:
+    source: https://github.com/themoos/core-moos/archive/10.0.2.a-release.tar.gz
+    plugin: cmake
+    configflags:
+      - -DCMAKE_INSTALL_PREFIX=/
+
+  moos-examples:
+    source: https://github.com/themoos/examples-docs-moos.git
+    source-subdir: docs/examples/AppExamples
+    source-depth: 1
+    plugin: cmake
+    after: [moos]
+    artifacts:
+      - bin/ex1010
+
+apps:
+  MOOSDB:
+    command: MOOSDB
+
+  ex1010:
+    command: ex1010
